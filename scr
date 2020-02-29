@@ -1,0 +1,58 @@
+echo -e "\nNEVEROVA LUBOV\n";
+echo -e "Programma dlya raboti c files:";
+echo -e "**Vyvodit tekushiy katalog\n**Zaprashivaet rasshirenie files\n**Izmenyaet naydennoe rasshirenie file na trebyemoe\n"
+while true
+do
+echo -e "Hotite obrabotat files? y|Y|n|N";
+read vhod;
+
+case "$vhod" in
+y|Y) echo "Prodolgim"
+echo -e "Tekushchiy katalog:" 
+pwd;
+echo -e "\nVvedite rasshirenie:"
+read text1;
+echo -e "\nVvedite rasshirenie2:"
+read text2;
+while [[ "$text1" = "" || "$text2" = "" ]]
+do
+ echo -e "\nVvedite rasshirenie:"
+ read text1
+ echo -e "\nVvedite rassherenie2:"
+ read text2
+done
+while [ "$text1" = "$text2" ]
+do
+ echo -e "\nRasshireniya sovpadayt!"
+ echo -e "\nVvedite rasshirenie:"
+ read text1
+ echo -e "\nVvedite rasshirenie2:"
+ read text2
+done
+var=$(find . -name "*.$text1");
+
+while [ "$var" = "" ]
+do
+ echo -e "\nNot Found"
+ echo -e "\nVvedite rasshirenie:"
+ read text1
+ echo -e "\nVvedite rasshirenie2:"
+ read text2
+ var=$(find . -name "*.$text1")
+done
+
+for i in *.$text1;
+do
+ mv "$i" "$(basename "$i" .$text1).$text2"
+done
+echo "Izmenenny files:"
+
+find . -name "*.$text2" -print;
+  ;;
+n|N) echo -e "\nZavershenie programmy"
+ exit 0
+  ;;
+*) echo -e "\nEwe raz"
+  ;;
+esac
+done
